@@ -17,6 +17,8 @@ import {
   getCategories,
   getSubjectTotals,
 } from "../api";
+import { exportToExcel } from "../utils/exportToExcel";
+import { Download } from "lucide-react";
 
 export default function Examination() {
   const [students, setStudents] = useState([]);
@@ -46,6 +48,7 @@ export default function Examination() {
   const [attendance, setAttendance] = useState([]);
   const [classData, setClassData] = useState([]);
   const [wardData, setWardData] = useState([]);
+  const [isExporting, setIsExporting] = useState(false);
 
   /* -----------------------------------------
       INITIAL LOAD
@@ -165,21 +168,75 @@ export default function Examination() {
     );
   };
 
+  const handleExport = async () => {
+    setIsExporting(true);
+    try {
+      // Fetch ALL students with current filters (no pagination limit)
+      const res = await getStudents({
+        ...filters,
+        page: 1,
+        limit: 10000, // Large limit to get all records
+      });
+
+      if (res && res.data) {
+        const exportData = res.data.map(s => ({
+          Name: s.student_name,
+          Gender: s.gender,
+          Ward: s.ward,
+          School: s.school_name,
+          Medium: s.medium,
+          Class: s.student_class,
+          Reading: s.reading_level,
+          Writing: s.writing_level,
+          Numeracy: s.numeracy_level
+        }));
+
+        exportToExcel(exportData, 'Student_Records', 'Students');
+      }
+    } catch (error) {
+      console.error("Export failed:", error);
+      alert("Failed to export data.");
+    } finally {
+      setIsExporting(false);
+    }
+  };
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 },
+  };
+
   return (
-    <section className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-white dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 p-6 md:p-10 transition-colors duration-300">
-      <div className="max-w-7xl mx-auto space-y-12">
+    <section className="min-h-screen bg-gradient-to-br from-[#82298B] via-[#2B3E8E] to-[#82298B] bg-[length:400%_400%] animate-gradient p-6 md:p-10 transition-colors duration-300">
+      <motion.div
+        className="max-w-7xl mx-auto space-y-12"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
 
         {/* HEADER */}
-        <div className="bg-gradient-to-r from-blue-600 to-cyan-600 rounded-2xl shadow-xl p-10 text-white">
-          <h1 className="text-4xl md:text-5xl font-bold">Examination Analytics</h1>
-          <p className="text-blue-100 text-lg mt-3">
-            Analyze student performance across wards.
+        <motion.div variants={itemVariants} className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl shadow-2xl p-10 text-white relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500"></div>
+          <h1 className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-blue-100">Examination Analytics</h1>
+          <p className="text-blue-100 text-lg mt-3 font-light">
+            Analyze student performance across wards with real-time insights.
           </p>
-        </div>
+        </motion.div>
 
         {/* WARD ATTENDANCE SUMMARY */}
-        <div className="bg-white dark:bg-slate-800 shadow-xl rounded-2xl border dark:border-slate-700 p-6 space-y-6 transition-colors duration-300">
-          <h2 className="text-2xl font-bold text-slate-700 dark:text-slate-200 text-center">
+        <motion.div variants={itemVariants} className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-md shadow-xl rounded-2xl border border-white/50 dark:border-slate-700 p-6 space-y-6 transition-colors duration-300">
+          <h2 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#82298B] to-[#2B3E8E] text-center">
             Ward-wise Attendance Summary
           </h2>
 
@@ -217,44 +274,64 @@ export default function Examination() {
               LongAbsent: w.long_absent,
             }))}
           />
-        </div>
+        </motion.div>
 
         {/* PIE CHART */}
-        <AttendancePieChart
-          data={[
-            { name: "Present", value: attendance.reduce((a, b) => a + (b.present || 0), 0) },
-            { name: "Absent", value: attendance.reduce((a, b) => a + (b.absent || 0), 0) },
-            { name: "Long Absent", value: attendance.reduce((a, b) => a + (b.long_absent || 0), 0) },
-          ]}
-        />
+        {/* PIE CHART */}
+        <motion.div variants={itemVariants}>
+          <AttendancePieChart
+            data={[
+              { name: "Present", value: attendance.reduce((a, b) => a + (b.present || 0), 0) },
+              { name: "Absent", value: attendance.reduce((a, b) => a + (b.absent || 0), 0) },
+              { name: "Long Absent", value: attendance.reduce((a, b) => a + (b.long_absent || 0), 0) },
+            ]}
+          />
+        </motion.div>
 
         {/* CLASS ATTENDANCE */}
-        <ClassAttendance data={classData} />
+        {/* CLASS ATTENDANCE */}
+        <motion.div variants={itemVariants}>
+          <ClassAttendance data={classData} />
+        </motion.div>
 
         {/* FILTERS */}
-        <div className="bg-white dark:bg-slate-800 shadow-lg rounded-2xl border dark:border-slate-700 p-6 transition-colors duration-300">
+        {/* FILTERS */}
+        <motion.div variants={itemVariants} className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-md shadow-lg rounded-2xl border border-white/50 dark:border-slate-700 p-6 transition-colors duration-300">
           <Filters
             onApply={(f) => {
               setFilters(f);
               fetchStudents(1, f);
             }}
           />
-        </div>
+        </motion.div>
 
         {/* LEARNING DISTRIBUTION CHARTS */}
-        <LearningDistributionCharts />
+        {/* LEARNING DISTRIBUTION CHARTS */}
+        <motion.div variants={itemVariants}>
+          <LearningDistributionCharts />
+        </motion.div>
 
         {/* DOMAIN CARDS */}
-        <div className="grid md:grid-cols-3 gap-8">
+        {/* DOMAIN CARDS */}
+        <motion.div variants={itemVariants} className="grid md:grid-cols-3 gap-8">
           <DomainCard title="READING" color="#0284C7" total={totals.reading} levels={levels.reading} categories={categories.reading} />
           <DomainCard title="WRITING" color="#059669" total={totals.writing} levels={levels.writing} categories={categories.writing} />
           <DomainCard title="NUMERACY" color="#f97316" total={totals.numeracy} levels={levels.numeracy} categories={categories.numeracy} />
-        </div>
+        </motion.div>
 
         {/* STUDENT TABLE */}
-        <div className="bg-white dark:bg-slate-800 shadow-xl rounded-2xl border dark:border-slate-700 overflow-hidden transition-colors duration-300">
-          <div className="bg-gradient-to-r from-blue-600 to-cyan-600 px-6 py-4">
+        {/* STUDENT TABLE */}
+        <motion.div variants={itemVariants} className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-md shadow-xl rounded-2xl border border-white/50 dark:border-slate-700 overflow-hidden transition-colors duration-300">
+          <div className="bg-gradient-to-r from-[#82298B] to-[#2B3E8E] px-6 py-4 flex justify-between items-center">
             <h3 className="text-xl font-bold text-white">Student Records</h3>
+            <button
+              onClick={handleExport}
+              disabled={isExporting}
+              className="px-4 py-2 bg-white/20 hover:bg-white/30 text-white rounded-lg transition-colors duration-200 flex items-center gap-2 text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <Download size={16} />
+              {isExporting ? "Exporting..." : "Export to Excel"}
+            </button>
           </div>
 
           <div className="overflow-x-auto max-h-[500px] overflow-y-scroll">
@@ -308,8 +385,8 @@ export default function Examination() {
               onChange={(p) => fetchStudents(p, filters)}
             />
           </div>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </section>
   );
 }
