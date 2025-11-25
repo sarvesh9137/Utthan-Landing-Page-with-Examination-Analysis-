@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer, Legend } from "recharts";
 import { motion } from "framer-motion";
 import { getLevels, getWardAttendance, getClassAttendance } from "../api";
+import { downloadChart } from "../utils/downloadChart";
 
 const COLORS = ["#EF4444", "#F97316", "#FACC15", "#EAB308", "#22C55E", "#15803D"]; // L0-L5 Colors
 
@@ -55,11 +56,29 @@ export default function LearningDistributionCharts() {
             transition={{ duration: 0.5 }}
             className="bg-white dark:bg-slate-800 rounded-2xl shadow-lg border border-slate-200 dark:border-slate-700 p-6 flex flex-col items-center"
         >
-            <h3 className="text-xl font-bold text-slate-700 dark:text-slate-200 mb-4 flex items-center gap-2">
-                <span className={`w-3 h-3 rounded-full ${color}`}></span>
-                {title}
-            </h3>
-            <div className="w-full h-64 relative">
+            <div className="w-full flex items-center justify-between mb-4">
+                <h3 className="text-xl font-bold text-slate-700 dark:text-slate-200 flex items-center gap-2">
+                    <span className={`w-3 h-3 rounded-full ${color}`}></span>
+                    {title}
+                </h3>
+                <button
+                    onClick={() => {
+                        const chartId = `chart-${title.toLowerCase().replace(/\s+/g, '-')}`;
+                        const filename = `${title.toLowerCase().replace(/\s+/g, '_')}_distribution`;
+                        downloadChart(chartId, filename);
+                    }}
+                    className="p-2 bg-indigo-500 hover:bg-indigo-600 text-white rounded-lg transition-colors duration-200 flex items-center gap-2 text-sm font-medium"
+                    title="Download Chart"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    Download
+                </button>
+            </div>
+            <div id={`chart-${title.toLowerCase().replace(/\s+/g, '-')}`} className="w-full h-64 relative">
                 <ResponsiveContainer width="100%" height="100%">
                     <PieChart>
                         <Pie

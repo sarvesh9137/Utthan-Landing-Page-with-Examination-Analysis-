@@ -1,6 +1,7 @@
 import React from "react";
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
 import { motion } from "framer-motion";
+import { downloadChart } from "../utils/downloadChart";
 
 const COLORS = ["#10B981", "#EF4444", "#F97316"]; // Green, Red, Orange
 
@@ -25,13 +26,26 @@ export default function ClassAttendance({ data }) {
                         transition={{ delay: index * 0.1 }}
                         className="bg-white dark:bg-slate-800 rounded-xl shadow-md border border-slate-200 dark:border-slate-700 p-5 flex flex-col transition-colors duration-300"
                     >
-                        <h3 className="text-lg font-bold text-slate-800 dark:text-slate-200 mb-4 border-b dark:border-slate-700 pb-2">
-                            {item.class}
-                        </h3>
+                        <div className="flex items-center justify-between mb-4 border-b dark:border-slate-700 pb-2">
+                            <h3 className="text-lg font-bold text-slate-800 dark:text-slate-200">
+                                {item.class}
+                            </h3>
+                            <button
+                                onClick={() => downloadChart(`class-chart-${item.class.replace(/\s+/g, '-')}`, `class_${item.class.replace(/\s+/g, '_')}_attendance`)}
+                                className="p-1.5 bg-indigo-500 hover:bg-indigo-600 text-white rounded-lg transition-colors duration-200"
+                                title="Download Chart"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                    <polyline points="7 10 12 15 17 10"></polyline>
+                                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                                </svg>
+                            </button>
+                        </div>
 
                         <div className="flex items-center justify-between">
                             {/* MINI PIE CHART */}
-                            <div className="w-32 h-32 relative">
+                            <div id={`class-chart-${item.class.replace(/\s+/g, '-')}`} className="w-32 h-32 relative bg-white dark:bg-slate-800">
                                 <ResponsiveContainer width="100%" height="100%">
                                     <PieChart>
                                         <Pie
