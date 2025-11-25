@@ -13,8 +13,8 @@ app.use(cors());
 app.use(express.json());
 
 // Register routes AFTER app is created
-app.use("/auth", authRoutes);
-app.use("/students", studentRoutes); // example
+app.use("/api/auth", authRoutes);
+app.use("/api/students", studentRoutes); // example
 
 app.get("/", (req, res) => {
   res.send("API running...");
