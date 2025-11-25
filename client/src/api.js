@@ -1,4 +1,5 @@
-const API = import.meta.env.VITE_API_URL || "http://localhost:5000/api/students";
+const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+const STUDENT_API = `${API_BASE}/students`;
 
 /* ------------------------------------------------------
    🔒 Safe Fetch Wrapper (Handles errors globally)
@@ -24,7 +25,7 @@ async function safeFetch(url, options = {}) {
 ------------------------------------------------------ */
 export async function getStudents(params = {}) {
   const query = new URLSearchParams(params).toString();
-  const res = await safeFetch(`${API}?${query}`);
+  const res = await safeFetch(`${STUDENT_API}?${query}`);
 
   if (!res || typeof res !== "object") {
     return {
@@ -50,7 +51,7 @@ export async function getStudents(params = {}) {
 ------------------------------------------------------ */
 export async function getLevels(subject, params = {}) {
   const query = new URLSearchParams(params).toString();
-  const data = await safeFetch(`${API}/levels/${subject}?${query}`);
+  const data = await safeFetch(`${STUDENT_API}/levels/${subject}?${query}`);
   return Array.isArray(data) ? data : [];
 }
 
@@ -58,7 +59,7 @@ export async function getLevels(subject, params = {}) {
    3️⃣ CATEGORY BREAKDOWN (Needs Improvement / Developing / Mainstream)
 ------------------------------------------------------ */
 export async function getCategories(subject) {
-  const data = await safeFetch(`${API}/categories/${subject}`);
+  const data = await safeFetch(`${STUDENT_API}/categories/${subject}`);
   return Array.isArray(data) ? data : [];
 }
 
@@ -66,7 +67,7 @@ export async function getCategories(subject) {
    4️⃣ WARD-WISE AVERAGE (If implemented in backend)
 ------------------------------------------------------ */
 export async function getWardAverage(subject) {
-  const data = await safeFetch(`${API}/ward-average/${subject}`);
+  const data = await safeFetch(`${STUDENT_API}/ward-average/${subject}`);
   return Array.isArray(data) ? data : [];
 }
 
@@ -74,7 +75,7 @@ export async function getWardAverage(subject) {
    5️⃣ WARD-WISE ATTENDANCE TABLE
 ------------------------------------------------------ */
 export async function getWardAttendance() {
-  const data = await safeFetch(`${API}/ward-attendance`);
+  const data = await safeFetch(`${STUDENT_API}/ward-attendance`);
   return Array.isArray(data) ? data : [];
 }
 
@@ -82,7 +83,7 @@ export async function getWardAttendance() {
    6️⃣ SUBJECT TOTALS (Correct present-student totals)
 ------------------------------------------------------ */
 export async function getSubjectTotals() {
-  const data = await safeFetch(`${API}/subject-totals`);
+  const data = await safeFetch(`${STUDENT_API}/subject-totals`);
   return data || { reading: 0, writing: 0, numeracy: 0 };
 }
 
@@ -90,7 +91,7 @@ export async function getSubjectTotals() {
    8️⃣ CLASS-WISE ATTENDANCE
 ------------------------------------------------------ */
 export async function getClassAttendance() {
-  const data = await safeFetch(`${API}/class-attendance`);
+  const data = await safeFetch(`${STUDENT_API}/class-attendance`);
   return Array.isArray(data) ? data : [];
 }
 
@@ -98,7 +99,7 @@ export async function getClassAttendance() {
    9️⃣ LOGIN ENDPOINT
 ------------------------------------------------------ */
 export async function login(credentials) {
-  return safeFetch("http://localhost:5000/api/auth/login", {
+  return safeFetch(`${API_BASE}/auth/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(credentials),
