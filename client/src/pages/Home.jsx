@@ -92,7 +92,7 @@ export default function Home() {
           className="group relative flex-1 text-center bg-white/95 backdrop-blur-sm text-[#82298B] px-6 md:px-8 py-4 rounded-2xl shadow-2xl font-bold text-lg overflow-hidden"
           style={{ transformStyle: "preserve-3d" }}
         >
-          <span className="relative z-10">Explore Dashboard</span>
+          <span className="relative z-10 whitespace-nowrap">Explore Dashboard</span>
           <motion.div
             className="absolute inset-0 bg-gradient-to-r from-[#82298B]/20 to-[#2B3E8E]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
           />
@@ -109,7 +109,7 @@ export default function Home() {
           className="group relative flex-1 text-center bg-white/10 backdrop-blur-md border-2 border-white/50 text-white px-6 md:px-8 py-4 rounded-2xl shadow-2xl font-bold text-lg overflow-hidden"
           style={{ transformStyle: "preserve-3d" }}
         >
-          <span className="relative z-10">Learn More</span>
+          <span className="relative z-10 whitespace-nowrap">Learn More</span>
           <motion.div
             className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
           />
@@ -159,8 +159,8 @@ export default function Home() {
                     whileHover={{ scale: 1.3 }}
                     whileTap={{ scale: 0.9 }}
                     className={`relative rounded-full transition-all duration-300 ${index === currentIndex
-                        ? "w-10 md:w-12 h-3 md:h-3.5 bg-white shadow-lg shadow-white/50"
-                        : "w-3 md:h-3.5 h-3 bg-white/60 hover:bg-white/80"
+                      ? "w-10 md:w-12 h-3 md:h-3.5 bg-white shadow-lg shadow-white/50"
+                      : "w-3 md:h-3.5 h-3 bg-white/60 hover:bg-white/80"
                       }`}
                     aria-label={`Go to slide ${index + 1}`}
                   >
