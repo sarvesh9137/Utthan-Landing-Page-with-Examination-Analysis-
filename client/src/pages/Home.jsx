@@ -63,17 +63,17 @@ export default function Home() {
         transition={{ duration: 0.6, delay: 0.4 }}
         className="w-full max-w-6xl"
       >
-        <div className="relative w-full h-[300px] md:h-[400px] lg:h-[500px] rounded-xl md:rounded-2xl overflow-hidden shadow-2xl border-2 md:border-4 border-white/20 backdrop-blur-sm bg-white/5">
+        <div className="relative w-full h-[300px] md:h-[400px] lg:h-[500px] rounded-xl md:rounded-2xl overflow-hidden shadow-2xl border-2 md:border-4 border-white/20 backdrop-blur-sm bg-gradient-to-br from-white/10 to-white/5">
           <AnimatePresence mode="wait">
             <motion.img
               key={currentIndex}
               src={images[currentIndex]}
               alt={`Slide ${currentIndex + 1}`}
-              initial={{ opacity: 0, scale: 1.1 }}
+              initial={{ opacity: 0, scale: 1.05 }}
               animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
+              exit={{ opacity: 0, scale: 0.95 }}
               transition={{ duration: 0.7 }}
-              className="absolute inset-0 w-full h-full object-cover"
+              className="absolute inset-0 w-full h-full object-contain p-2 md:p-4"
             />
           </AnimatePresence>
 
@@ -84,8 +84,8 @@ export default function Home() {
                 key={index}
                 onClick={() => setCurrentIndex(index)}
                 className={`w-2.5 h-2.5 md:w-3 md:h-3 rounded-full transition-all duration-300 shadow-md ${index === currentIndex
-                    ? "bg-white scale-125"
-                    : "bg-white/50 hover:bg-white/75"
+                  ? "bg-white scale-125"
+                  : "bg-white/50 hover:bg-white/75"
                   }`}
                 aria-label={`Go to slide ${index + 1}`}
               />
