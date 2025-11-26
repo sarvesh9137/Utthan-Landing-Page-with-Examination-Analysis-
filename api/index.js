@@ -1,4 +1,6 @@
-import app from '../server/index.js';
+// Vercel serverless function handler
+export default async function handler(req, res) {
+    const app = (await import('../server/index.js')).default;
+    return app(req, res);
+}
 
-// Export the Express app as a Vercel serverless function
-export default app;
