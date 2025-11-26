@@ -63,7 +63,7 @@ export default function Home() {
         transition={{ duration: 0.6, delay: 0.4 }}
         className="w-full max-w-6xl"
       >
-        <div className="relative w-full h-[300px] md:h-[400px] lg:h-[500px] rounded-xl md:rounded-2xl overflow-hidden shadow-2xl border-2 md:border-4 border-white/20 backdrop-blur-sm bg-gradient-to-br from-white/10 to-white/5">
+        <div className="relative w-full h-[350px] md:h-[450px] lg:h-[550px] rounded-xl md:rounded-2xl overflow-hidden shadow-2xl border-2 md:border-4 border-white/20 backdrop-blur-sm bg-gradient-to-br from-slate-900/20 to-slate-800/10">
           <AnimatePresence mode="wait">
             <motion.img
               key={currentIndex}
@@ -73,7 +73,7 @@ export default function Home() {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
               transition={{ duration: 0.7 }}
-              className="absolute inset-0 w-full h-full object-contain p-2 md:p-4"
+              className="absolute inset-0 w-full h-full object-scale-down"
             />
           </AnimatePresence>
 
