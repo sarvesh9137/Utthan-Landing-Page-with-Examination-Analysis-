@@ -1,8 +1,8 @@
-// src/App.jsx
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
+import Footer from "./components/Footer";
 
 import Home from "./pages/Home";
 import About from "./pages/About";
@@ -19,7 +19,7 @@ function App() {
     <BrowserRouter>
       <div className="min-h-screen flex flex-col">
         <Navbar toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
-        <div className="flex pt-20">
+        <div className="flex flex-1 pt-20">
           <Sidebar isOpen={isSidebarOpen} />
           <main className="flex-1">
 
@@ -33,6 +33,7 @@ function App() {
             </Routes>
           </main>
         </div>
+        <Footer />
       </div>
     </BrowserRouter>
   );

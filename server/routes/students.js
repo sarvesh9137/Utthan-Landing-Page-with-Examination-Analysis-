@@ -220,7 +220,7 @@ router.get("/ward-average/:subject", async (req, res) => {
   if (!valid.includes(subject))
     return res.status(400).json({ error: "Invalid subject" });
 
-  const col = `${subject} _level`;
+  const col = `${subject}_level`;
 
   try {
     const query = `
