@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import adani Growth from "../components/images/adani growth.jpg";
+import adaniGrowth from "../components/images/adani growth.jpg";
 import utthanProject from "../components/images/utthanproject.jpg";
 import utthanGrp from "../components/images/utthangrp.jpg";
 
@@ -159,8 +159,8 @@ export default function Home() {
                     whileHover={{ scale: 1.3 }}
                     whileTap={{ scale: 0.9 }}
                     className={`relative rounded-full transition-all duration-300 ${index === currentIndex
-                        ? "w-10 md:w-12 h-3 md:h-3.5 bg-white shadow-lg shadow-white/50"
-                        : "w-3 md:h-3.5 h-3 bg-white/60 hover:bg-white/80"
+                      ? "w-10 md:w-12 h-3 md:h-3.5 bg-white shadow-lg shadow-white/50"
+                      : "w-3 md:h-3.5 h-3 bg-white/60 hover:bg-white/80"
                       }`}
                     aria-label={`Go to slide ${index + 1}`}
                   >
