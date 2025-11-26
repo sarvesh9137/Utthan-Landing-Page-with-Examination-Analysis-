@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import adaniGrowth from "../components/images/adani growth.jpg";
+import adani Growth from "../components/images/adani growth.jpg";
 import utthanProject from "../components/images/utthanproject.jpg";
 import utthanGrp from "../components/images/utthangrp.jpg";
 
@@ -89,7 +89,7 @@ export default function Home() {
             boxShadow: "0 25px 50px -12px rgba(255, 255, 255, 0.5)"
           }}
           whileTap={{ scale: 0.95 }}
-          className="group relative flex-1 text-center bg-white/95 backdrop-blur-sm text-[#82298B] px-6 md:px-8 py-4 rounded-2xl shadow-2xl font-bold text-lg overflow-hidden"
+          className="group relative flex-1 flex items-center justify-center bg-white/95 backdrop-blur-sm text-[#82298B] px-6 md:px-8 py-4 rounded-2xl shadow-2xl font-bold text-lg overflow-hidden"
           style={{ transformStyle: "preserve-3d" }}
         >
           <span className="relative z-10 whitespace-nowrap">Explore Dashboard</span>
@@ -106,7 +106,7 @@ export default function Home() {
             boxShadow: "0 25px 50px -12px rgba(255, 255, 255, 0.3)"
           }}
           whileTap={{ scale: 0.95 }}
-          className="group relative flex-1 text-center bg-white/10 backdrop-blur-md border-2 border-white/50 text-white px-6 md:px-8 py-4 rounded-2xl shadow-2xl font-bold text-lg overflow-hidden"
+          className="group relative flex-1 flex items-center justify-center bg-white/10 backdrop-blur-md border-2 border-white/50 text-white px-6 md:px-8 py-4 rounded-2xl shadow-2xl font-bold text-lg overflow-hidden"
           style={{ transformStyle: "preserve-3d" }}
         >
           <span className="relative z-10 whitespace-nowrap">Learn More</span>
@@ -159,8 +159,8 @@ export default function Home() {
                     whileHover={{ scale: 1.3 }}
                     whileTap={{ scale: 0.9 }}
                     className={`relative rounded-full transition-all duration-300 ${index === currentIndex
-                      ? "w-10 md:w-12 h-3 md:h-3.5 bg-white shadow-lg shadow-white/50"
-                      : "w-3 md:h-3.5 h-3 bg-white/60 hover:bg-white/80"
+                        ? "w-10 md:w-12 h-3 md:h-3.5 bg-white shadow-lg shadow-white/50"
+                        : "w-3 md:h-3.5 h-3 bg-white/60 hover:bg-white/80"
                       }`}
                     aria-label={`Go to slide ${index + 1}`}
                   >
