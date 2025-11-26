@@ -5,11 +5,12 @@ import logo from "./images/Utthan logo.png";
 export default function Navbar({ toggleSidebar, isSidebarOpen }) {
   return (
     <nav className="bg-white dark:bg-slate-900 shadow-md fixed w-full top-0 z-50 transition-colors duration-300">
-      <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-        <div className="flex items-center gap-4">
+      <div className="max-w-7xl mx-auto px-4 md:px-6 py-4 flex justify-between items-center">
+        <div className="flex items-center gap-2 md:gap-4">
+          {/* Hamburger button - ONLY ON MOBILE */}
           <button
             onClick={toggleSidebar}
-            className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors focus:outline-none"
+            className="md:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors focus:outline-none"
             aria-label="Toggle Sidebar"
           >
             <div className="w-6 h-5 flex flex-col justify-between">
@@ -23,12 +24,13 @@ export default function Navbar({ toggleSidebar, isSidebarOpen }) {
             <img
               src={logo}
               alt="Utthan Logo"
-              className="h-16 w-auto transition-transform duration-500 group-hover:scale-105 drop-shadow-sm"
+              className="h-12 md:h-16 w-auto transition-transform duration-500 group-hover:scale-105 drop-shadow-sm"
             />
           </Link>
         </div>
 
-        <div className="flex gap-8 text-lg font-medium">
+        {/* Desktop Navigation Links - HIDDEN ON MOBILE */}
+        <div className="hidden md:flex gap-8 text-lg font-medium">
           {["Home", "About", "Examination", "Contact"].map((name) => (
             <NavLink
               key={name}
@@ -45,7 +47,7 @@ export default function Navbar({ toggleSidebar, isSidebarOpen }) {
           ))}
         </div>
 
-        <div className="ml-4">
+        <div className="ml-2 md:ml-4">
           <DarkModeToggle />
         </div>
       </div>

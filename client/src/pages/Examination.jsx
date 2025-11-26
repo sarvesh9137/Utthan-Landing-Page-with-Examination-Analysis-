@@ -217,26 +217,26 @@ export default function Examination() {
   };
 
   return (
-    <section className="min-h-screen bg-gradient-to-br from-[#82298B] via-[#2B3E8E] to-[#82298B] bg-[length:400%_400%] animate-gradient p-6 md:p-10 transition-colors duration-300">
+    <section className="min-h-screen bg-gradient-to-br from-[#82298B] via-[#2B3E8E] to-[#82298B] bg-[length:400%_400%] animate-gradient p-4 md:p-6 lg:p-10 transition-colors duration-300">
       <motion.div
-        className="max-w-7xl mx-auto space-y-12"
+        className="max-w-7xl mx-auto space-y-6 md:space-y-12"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
       >
 
         {/* HEADER */}
-        <motion.div variants={itemVariants} className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl shadow-2xl p-10 text-white relative overflow-hidden">
+        <motion.div variants={itemVariants} className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl shadow-2xl p-6 md:p-10 text-white relative overflow-hidden">
           <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500"></div>
-          <h1 className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-blue-100">Examination Analytics</h1>
-          <p className="text-blue-100 text-lg mt-3 font-light">
+          <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-blue-100">Examination Analytics</h1>
+          <p className="text-blue-100 text-sm md:text-lg mt-2 md:mt-3 font-light">
             Analyze student performance across wards with real-time insights.
           </p>
         </motion.div>
 
         {/* WARD ATTENDANCE SUMMARY */}
         <motion.div variants={itemVariants} className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-md shadow-xl rounded-2xl border border-white/50 dark:border-slate-700 p-6 space-y-6 transition-colors duration-300">
-          <h2 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#82298B] to-[#2B3E8E] text-center">
+          <h2 className="text-xl md:text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#82298B] to-[#2B3E8E] text-center">
             Ward-wise Attendance Summary
           </h2>
 
@@ -313,7 +313,7 @@ export default function Examination() {
 
         {/* DOMAIN CARDS */}
         {/* DOMAIN CARDS */}
-        <motion.div variants={itemVariants} className="grid md:grid-cols-3 gap-8">
+        <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8">
           <DomainCard title="READING" color="#0284C7" total={totals.reading} levels={levels.reading} categories={categories.reading} />
           <DomainCard title="WRITING" color="#059669" total={totals.writing} levels={levels.writing} categories={categories.writing} />
           <DomainCard title="NUMERACY" color="#f97316" total={totals.numeracy} levels={levels.numeracy} categories={categories.numeracy} />
@@ -322,8 +322,8 @@ export default function Examination() {
         {/* STUDENT TABLE */}
         {/* STUDENT TABLE */}
         <motion.div variants={itemVariants} className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-md shadow-xl rounded-2xl border border-white/50 dark:border-slate-700 overflow-hidden transition-colors duration-300">
-          <div className="bg-gradient-to-r from-[#82298B] to-[#2B3E8E] px-6 py-4 flex justify-between items-center">
-            <h3 className="text-xl font-bold text-white">Student Records</h3>
+          <div className="bg-gradient-to-r from-[#82298B] to-[#2B3E8E] px-4 md:px-6 py-3 md:py-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 sm:gap-0">
+            <h3 className="text-lg md:text-xl font-bold text-white">Student Records</h3>
             <button
               onClick={handleExport}
               disabled={isExporting}
