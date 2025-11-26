@@ -13,9 +13,9 @@ export default function DomainCard({
      ICON MAP
   --------------------------------------------- */
   const icons = {
-    READING: <BookOpen size={28} />,
-    WRITING: <PenTool size={28} />,
-    NUMERACY: <Calculator size={28} />,
+    READING: <BookOpen size={24} className="md:w-7 md:h-7" />,
+    WRITING: <PenTool size={24} className="md:w-7 md:h-7" />,
+    NUMERACY: <Calculator size={24} className="md:w-7 md:h-7" />,
   };
 
   /* ---------------------------------------------
@@ -59,23 +59,23 @@ export default function DomainCard({
           CARD HEADER
       --------------------------------------------- */}
       <div
-        className="px-6 py-4 text-white flex justify-between items-center"
+        className="px-4 md:px-6 py-3 md:py-4 text-white flex justify-between items-center"
         style={{ background: color }}
       >
-        <div className="flex items-center gap-3 text-white font-bold text-xl">
+        <div className="flex items-center gap-2 md:gap-3 text-white font-bold text-lg md:text-xl">
           {icons[title]}
           {title}
         </div>
 
         <div className="text-right">
           <p className="text-xs opacity-80">Total Students</p>
-          <p className="text-2xl font-bold">
+          <p className="text-xl md:text-2xl font-bold">
             {Number(total).toLocaleString()}
           </p>
         </div>
       </div>
 
-      <div className="p-6 space-y-10">
+      <div className="p-4 md:p-6 space-y-6 md:space-y-10">
 
         {/* ---------------------------------------------
             LEVEL DISTRIBUTION (L0–L5)

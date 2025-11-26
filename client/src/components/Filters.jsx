@@ -14,10 +14,10 @@ export default function Filters({ onApply }) {
   }
 
   return (
-    <div className="bg-white dark:bg-slate-800 rounded-2xl border dark:border-slate-700 shadow-md p-6 space-y-4 transition-colors duration-300">
-      <h2 className="text-xl font-semibold text-slate-800 dark:text-slate-200">Filter Students</h2>
+    <div className="bg-white dark:bg-slate-800 rounded-2xl border dark:border-slate-700 shadow-md p-4 md:p-6 space-y-4 transition-colors duration-300">
+      <h2 className="text-lg md:text-xl font-semibold text-slate-800 dark:text-slate-200">Filter Students</h2>
 
-      <div className="grid md:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
 
         {/* Student Name */}
         <div>
@@ -82,12 +82,12 @@ export default function Filters({ onApply }) {
       </div>
 
       {/* Apply Button */}
-      <div className="text-right">
+      <div className="text-center md:text-right">
         <button
           onClick={() => onApply(filters)}
-          className="px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold shadow hover:bg-blue-700 transition"
+          className="w-full md:w-auto px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold shadow hover:bg-blue-700 transition"
         >
-          Apply
+          Apply Filters
         </button>
       </div>
     </div>

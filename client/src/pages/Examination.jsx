@@ -235,35 +235,39 @@ export default function Examination() {
         </motion.div>
 
         {/* WARD ATTENDANCE SUMMARY */}
-        <motion.div variants={itemVariants} className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-md shadow-xl rounded-2xl border border-white/50 dark:border-slate-700 p-6 space-y-6 transition-colors duration-300">
+        <motion.div variants={itemVariants} className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-md shadow-xl rounded-2xl border border-white/50 dark:border-slate-700 p-4 md:p-6 space-y-4 md:space-y-6 transition-colors duration-300">
           <h2 className="text-xl md:text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#82298B] to-[#2B3E8E] text-center">
             Ward-wise Attendance Summary
           </h2>
 
-          <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-slate-200 dark:divide-slate-700">
-              <thead className="bg-slate-100 dark:bg-slate-700">
-                <tr>
-                  {["Ward", "Total Students", "Present", "Absent", "Long Absent"].map((h) => (
-                    <th key={h} className="px-6 py-3 text-left font-bold text-slate-700 dark:text-slate-200">
-                      {h}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
+          <div className="overflow-x-auto -mx-4 md:mx-0">
+            <div className="inline-block min-w-full align-middle">
+              <div className="overflow-hidden">
+                <table className="min-w-full divide-y divide-slate-200 dark:divide-slate-700">
+                  <thead className="bg-slate-100 dark:bg-slate-700">
+                    <tr>
+                      {["Ward", "Total Students", "Present", "Absent", "Long Absent"].map((h) => (
+                        <th key={h} className="px-3 md:px-6 py-3 text-left text-xs md:text-sm font-bold text-slate-700 dark:text-slate-200 whitespace-nowrap">
+                          {h}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
 
-              <tbody className="divide-y divide-slate-200 dark:divide-slate-700">
-                {attendance.map((w) => (
-                  <tr key={w.ward} className="hover:bg-blue-50 dark:hover:bg-slate-700 transition">
-                    <td className="px-6 py-3 dark:text-slate-300">{w.ward}</td>
-                    <td className="px-6 py-3 dark:text-slate-300">{w.total_students}</td>
-                    <td className="px-6 py-3 text-green-700 dark:text-green-400">{w.present}</td>
-                    <td className="px-6 py-3 text-red-600 dark:text-red-400">{w.absent}</td>
-                    <td className="px-6 py-3 text-orange-600 dark:text-orange-400">{w.long_absent}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+                  <tbody className="divide-y divide-slate-200 dark:divide-slate-700">
+                    {attendance.map((w) => (
+                      <tr key={w.ward} className="hover:bg-blue-50 dark:hover:bg-slate-700 transition">
+                        <td className="px-3 md:px-6 py-3 text-sm md:text-base dark:text-slate-300 whitespace-nowrap">{w.ward}</td>
+                        <td className="px-3 md:px-6 py-3 text-sm md:text-base dark:text-slate-300">{w.total_students}</td>
+                        <td className="px-3 md:px-6 py-3 text-sm md:text-base text-green-700 dark:text-green-400">{w.present}</td>
+                        <td className="px-3 md:px-6 py-3 text-sm md:text-base text-red-600 dark:text-red-400">{w.absent}</td>
+                        <td className="px-3 md:px-6 py-3 text-sm md:text-base text-orange-600 dark:text-orange-400">{w.long_absent}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
 
           <BarChartComp
@@ -336,7 +340,7 @@ export default function Examination() {
 
           <div className="overflow-x-auto max-h-[500px] overflow-y-scroll">
             <table className="min-w-full divide-y divide-slate-200 dark:divide-slate-700">
-              <thead className="sticky top-0 bg-white dark:bg-slate-800 shadow-md">
+              <thead className="sticky top-0 bg-white dark:bg-slate-800 shadow-md z-10">
                 <tr>
                   {[
                     "Name",
@@ -349,7 +353,7 @@ export default function Examination() {
                     "Writing",
                     "Numeracy",
                   ].map((h) => (
-                    <th key={h} className="px-6 py-4 text-left text-xs font-bold text-slate-700 dark:text-slate-300 uppercase">
+                    <th key={h} className="px-3 md:px-6 py-3 md:py-4 text-left text-xs font-bold text-slate-700 dark:text-slate-300 uppercase whitespace-nowrap">
                       {h}
                     </th>
                   ))}
@@ -359,19 +363,19 @@ export default function Examination() {
               <tbody className="divide-y divide-slate-200 dark:divide-slate-700">
                 {students.map((s, i) => (
                   <tr key={s.id} className={`${i % 2 ? "bg-slate-50 dark:bg-slate-700/50" : "bg-white dark:bg-slate-800"} hover:bg-blue-50 dark:hover:bg-slate-700 transition`}>
-                    <td className="px-6 py-4 font-medium dark:text-slate-200">{s.student_name}</td>
-                    <td className="px-6 py-4 dark:text-slate-300">{s.gender}</td>
-                    <td className="px-6 py-4 dark:text-slate-300">{s.ward}</td>
-                    <td className="px-6 py-4 dark:text-slate-300">{s.school_name}</td>
-                    <td className="px-6 py-4">{mediumBadge(s.medium)}</td>
+                    <td className="px-3 md:px-6 py-3 md:py-4 text-sm md:text-base font-medium dark:text-slate-200 whitespace-nowrap">{s.student_name}</td>
+                    <td className="px-3 md:px-6 py-3 md:py-4 text-sm md:text-base dark:text-slate-300">{s.gender}</td>
+                    <td className="px-3 md:px-6 py-3 md:py-4 text-sm md:text-base dark:text-slate-300">{s.ward}</td>
+                    <td className="px-3 md:px-6 py-3 md:py-4 text-sm md:text-base dark:text-slate-300 max-w-xs truncate" title={s.school_name}>{s.school_name}</td>
+                    <td className="px-3 md:px-6 py-3 md:py-4">{mediumBadge(s.medium)}</td>
 
-                    <td className="px-6 py-4 font-semibold text-slate-700 dark:text-slate-300">
+                    <td className="px-3 md:px-6 py-3 md:py-4 text-sm md:text-base font-semibold text-slate-700 dark:text-slate-300">
                       {s.student_class || "-"}
                     </td>
 
-                    <td className="px-6 py-4">{levelBadge(s.reading_level)}</td>
-                    <td className="px-6 py-4">{levelBadge(s.writing_level)}</td>
-                    <td className="px-6 py-4">{levelBadge(s.numeracy_level)}</td>
+                    <td className="px-3 md:px-6 py-3 md:py-4">{levelBadge(s.reading_level)}</td>
+                    <td className="px-3 md:px-6 py-3 md:py-4">{levelBadge(s.writing_level)}</td>
+                    <td className="px-3 md:px-6 py-3 md:py-4">{levelBadge(s.numeracy_level)}</td>
                   </tr>
                 ))}
               </tbody>
