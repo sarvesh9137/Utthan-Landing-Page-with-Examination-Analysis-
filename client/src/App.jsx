@@ -10,6 +10,7 @@ import Examination from "./pages/Examination";
 import Contact from "./pages/Contact";
 import Login from "./pages/Login";
 
+
 function App() {
   const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
 
@@ -30,6 +31,7 @@ function App() {
               <Route path="/examination" element={<Examination />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/login" element={<Login />} />
+
             </Routes>
           </main>
         </div>

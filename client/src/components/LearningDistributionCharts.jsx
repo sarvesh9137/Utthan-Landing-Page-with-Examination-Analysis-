@@ -48,6 +48,14 @@ export default function LearningDistributionCharts() {
         setFilters({ ...filters, [e.target.name]: e.target.value });
     };
 
+
+    const getFilterText = () => {
+        const filterParts = [];
+        if (filters.class) filterParts.push(`Class: ${filters.class}`);
+        if (filters.ward) filterParts.push(`Ward: ${filters.ward}`);
+        return filterParts.length > 0 ? filterParts.join(' | ') : 'All Students';
+    };
+
     const ChartSection = ({ title, chartData, color }) => (
         <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -94,35 +102,50 @@ export default function LearningDistributionCharts() {
                     </button>
                 </div>
             </div>
-            <div id={`chart-${title.toLowerCase().replace(/\s+/g, '-')}`} className="w-full h-64 relative">
-                <ResponsiveContainer width="100%" height="100%">
-                    <PieChart>
-                        <Pie
-                            data={chartData}
-                            cx="50%"
-                            cy="50%"
-                            innerRadius={60}
-                            outerRadius={80}
-                            paddingAngle={2}
-                            dataKey="value"
-                            startAngle={90}
-                            endAngle={-270}
-                            label={({ name, percentage }) => `${name} (${percentage}%)`}
-                        >
-                            {chartData.map((entry, index) => (
-                                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                            ))}
-                        </Pie>
-                        <Tooltip
-                            contentStyle={{ backgroundColor: '#1e293b', borderColor: '#334155', color: '#fff' }}
-                            itemStyle={{ color: '#fff' }}
-                        />
-                        <Legend verticalAlign="bottom" height={36} />
-                    </PieChart>
-                </ResponsiveContainer>
+            <div id={`chart-${title.toLowerCase().replace(/\s+/g, '-')}`} className="w-full flex flex-col">
+                <div className="w-full h-64 relative">
+                    <ResponsiveContainer width="100%" height="100%">
+                        <PieChart>
+                            <Pie
+                                data={chartData}
+                                cx="50%"
+                                cy="50%"
+                                innerRadius={60}
+                                outerRadius={80}
+                                paddingAngle={2}
+                                dataKey="value"
+                                startAngle={90}
+                                endAngle={-270}
+                                label={({ name, percentage }) => `${name} (${percentage}%)`}
+                            >
+                                {chartData.map((entry, index) => (
+                                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                ))}
+                            </Pie>
+                            <Tooltip
+                                contentStyle={{ backgroundColor: '#1e293b', borderColor: '#334155', color: '#fff' }}
+                                itemStyle={{ color: '#fff' }}
+                            />
+                            <Legend verticalAlign="bottom" height={36} />
+                        </PieChart>
+                    </ResponsiveContainer>
+                </div>
+
+                {/* Filter Information - Included in download/copy */}
+                <div className="w-full mt-3 pt-3 border-t border-slate-200 dark:border-slate-600">
+                    <div className="text-center">
+                        <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1">
+                            Applied Filters
+                        </p>
+                        <p className="text-sm font-medium text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-700/50 px-3 py-1.5 rounded-lg inline-block">
+                            {getFilterText()}
+                        </p>
+                    </div>
+                </div>
             </div>
         </motion.div>
     );
+
 
     return (
         <section className="space-y-8">

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from "framer-motion";
 import adaniGrowth from "../components/images/adani growth.jpg";
 import utthanProject from "../components/images/utthanproject.jpg";
 import utthanGrp from "../components/images/utthangrp.jpg";
@@ -9,6 +9,31 @@ const images = [adaniGrowth, utthanProject, utthanGrp];
 export default function Home() {
   const [currentIndex, setCurrentIndex] = useState(0);
 
+  // Mouse interaction setup
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  // Smooth spring animation for mouse movement
+  const springConfig = { damping: 25, stiffness: 150 };
+  const springX = useSpring(mouseX, springConfig);
+  const springY = useSpring(mouseY, springConfig);
+
+  // Parallax transforms for different layers
+  // We use a safe fallback for window dimensions or just arbitrary ranges since we update mouseX/Y with client coordinates
+  const moveX1 = useTransform(springX, [0, 2000], [-50, 50]);
+  const moveY1 = useTransform(springY, [0, 2000], [-50, 50]);
+
+  const moveX2 = useTransform(springX, [0, 2000], [50, -50]);
+  const moveY2 = useTransform(springY, [0, 2000], [50, -50]);
+
+  const moveX3 = useTransform(springX, [0, 2000], [-25, 25]);
+  const moveY3 = useTransform(springY, [0, 2000], [-25, 25]);
+
+  function handleMouseMove({ clientX, clientY }) {
+    mouseX.set(clientX);
+    mouseY.set(clientY);
+  }
+
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % images.length);
@@ -17,27 +42,59 @@ export default function Home() {
   }, []);
 
   return (
-    <section className="relative min-h-screen flex flex-col justify-center items-center bg-gradient-to-br from-[#82298B] via-[#2B3E8E] to-[#82298B] bg-[length:400%_400%] animate-gradient py-8 md:py-16 px-4 overflow-hidden">
+    <section
+      onMouseMove={handleMouseMove}
+      className="relative min-h-screen flex flex-col justify-center items-center bg-slate-900 py-8 md:py-16 px-4 overflow-hidden"
+    >
+      {/* Noise Texture Overlay */}
+      <div className="absolute inset-0 z-[1] opacity-20 pointer-events-none mix-blend-overlay"
+        style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='1'/%3E%3C/svg%3E")` }}
+      />
 
-      {/* Animated Background Circles */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {/* 3D Animated Gradient Background */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+        {/* Deep Purple Orb - Interactive */}
         <motion.div
+          style={{ x: moveX1, y: moveY1 }}
           animate={{
             scale: [1, 1.2, 1],
-            rotate: [0, 180, 360],
-            opacity: [0.1, 0.2, 0.1],
+            opacity: [0.4, 0.6, 0.4]
           }}
-          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-          className="absolute -top-1/2 -left-1/2 w-full h-full bg-gradient-to-br from-white/10 to-transparent rounded-full blur-3xl"
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute top-[-10%] left-[-10%] w-[60vw] h-[60vw] bg-[#82298B] rounded-full mix-blend-screen filter blur-[120px]"
         />
+
+        {/* Royal Blue Orb - Interactive */}
         <motion.div
+          style={{ x: moveX2, y: moveY2 }}
           animate={{
-            scale: [1.2, 1, 1.2],
-            rotate: [360, 180, 0],
-            opacity: [0.1, 0.2, 0.1],
+            scale: [1, 1.3, 1],
+            opacity: [0.4, 0.6, 0.4]
           }}
-          transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-          className="absolute -bottom-1/2 -right-1/2 w-full h-full bg-gradient-to-tl from-purple-500/10 to-transparent rounded-full blur-3xl"
+          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+          className="absolute top-[20%] right-[-10%] w-[50vw] h-[50vw] bg-[#2B3E8E] rounded-full mix-blend-screen filter blur-[120px]"
+        />
+
+        {/* Cyan/Light Blue Orb - Interactive */}
+        <motion.div
+          style={{ x: moveX3, y: moveY3 }}
+          animate={{
+            scale: [1, 1.1, 1],
+            opacity: [0.3, 0.5, 0.3]
+          }}
+          transition={{ duration: 15, repeat: Infinity, ease: "easeInOut", delay: 4 }}
+          className="absolute bottom-[-10%] left-[20%] w-[60vw] h-[60vw] bg-cyan-500 rounded-full mix-blend-screen filter blur-[120px]"
+        />
+
+        {/* Pink Accent Orb - Interactive */}
+        <motion.div
+          style={{ x: moveX2, y: moveY1 }}
+          animate={{
+            scale: [1, 1.4, 1],
+            opacity: [0.3, 0.5, 0.3]
+          }}
+          transition={{ duration: 18, repeat: Infinity, ease: "easeInOut", delay: 6 }}
+          className="absolute bottom-[10%] right-[30%] w-[45vw] h-[45vw] bg-pink-600 rounded-full mix-blend-screen filter blur-[120px]"
         />
       </div>
 
