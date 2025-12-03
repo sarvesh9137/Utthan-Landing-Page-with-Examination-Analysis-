@@ -12,6 +12,12 @@ const app = express();        // <-- MUST come before app.use()
 app.use(cors());
 app.use(express.json());
 
+// Request Logger
+app.use((req, res, next) => {
+  console.log(`📢 [${req.method}] ${req.url}`);
+  next();
+});
+
 // Register routes AFTER app is created
 app.use("/api/auth", authRoutes);
 app.use("/api/students", studentRoutes); // example
